@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<!--Objective:
+The goal of this project is to build a Calculator App using HTML,
+CSS, and JavaScript. The application  allow users to
+perform basic arithmetic operations like addition, subtraction,
+multiplication, and division-->
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Basic Calculator</title>
+  </head>
+
+  <style>
+    body {
+      display: grid;
+      width: 100%;
+      height: 100vh;
+      place-items: center;
+      background: aliceblue;
+    }
+
+    .calculatorBody {
+      background: rgb(41, 41, 41);
+      display: grid;
+      width: 80%;
+      max-width: 400px;
+      height: 80%;
+      place-items: center;
+      border-radius: 20px;
+      box-shadow: 0px 0px 3px #33333383, 0px -0px 3px #33333383;
+    }
+
+    .display {
+      width: 80%;
+      max-width: 350px;
+      height: 100px;
+      background: aliceblue;
+      box-shadow: 0px 0px 3px #33333383;
+    }
+
+    .button_wrapper {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 55px;
+      gap: 6px;
+    }
+
+    .button_wrapper button {
+      width: 70px;
+      border: none;
+      background-color: #d88621;
+      font-size: 1.1em;
+    }
+
+    .zeroBtn {
+      grid-column: span 3;
+    }
+    .clearBtn {
+      grid-column: span 2;
+      min-width: 100%;
+    }
+    .zeroBtn {
+      grid-column: span 3;
+      min-width: 100%;
+    }
+    .eqaulBtn {
+      grid-row: span 2;
+      min-width: 100%;
+    }
+    .input,
+    .output {
+      height: 50px;
+      font-size: 1.6em;
+      padding: 5px;
+    }
+
+    .output {
+      font-size: 2em;
+      text-align: right;
+    }
+  </style>
+  <body>
+    <main class="calculatorBody">
+      <div class="display">
+        <div class="input">0</div>
+        <div class="output">0</div>
+      </div>
+      <div class="button_wrapper">
+        <button class="clearBtn">c</button>
+        <button>+</button>
+        <button>-</button>
+        <button>1</button><button>2</button>
+        <button>3</button>
+        <button>x</button>
+        <button>4</button>
+        <button>5</button><button>6</button>
+        <button>/</button>
+        <button>7</button>
+        <button>8</button>
+        <button>9</button>
+        <button class="eqaulBtn">=</button>
+        <button class="zeroBtn">0</button>
+      </div>
+    </main>
+
+    <script>
+      const inputDisplay = document.querySelector(".input");
+      const outputDisplay = document.querySelector(".output");
+
+      const buttons = document.querySelectorAll(".button_wrapper button");
+      inputDisplay.textContent = "";
+      let firstNum = 0;
+      let secondNum = 0;
+      let operator = "";
+      buttons.forEach((button) => {
+        button.onclick = () => {
+          inputDisplay.textContent += button.textContent;
+          if (button.textContent === "c") {
+            inputDisplay.textContent = "0";
+            outputDisplay.textContent = 0;
+          } else if (!firstNum && button.textContent === "=") {
+            inputDisplay.textContent = "";
+            outputDisplay.textContent = 0;
+          } else if (
+            button.textContent === "x" ||
+            button.textContent === "+" ||
+            button.textContent === "-" ||
+            button.textContent === "/"
+          ) {
+            firstNum = parseFloat(inputDisplay.textContent);
+            inputDisplay.textContent = "";
+            operator = button.textContent;
+          } else if (operator && button.textContent === "=") {
+            secondNum = parseFloat(inputDisplay.textContent);
+
+            inputDisplay.textContent = "";
+
+            switch (operator) {
+              case "x":
+                !firstNum || !secondNum
+                  ? (outputDisplay.textContent = 0)
+                  : (outputDisplay.textContent = firstNum * secondNum);
+
+                break;
+              case "/":
+                !firstNum || !secondNum
+                  ? (outputDisplay.textContent = 0)
+                  : (outputDisplay.textContent = firstNum / secondNum);
+                break;
+              case "+":
+                !firstNum || !secondNum
+                  ? (outputDisplay.textContent = 0)
+                  : (outputDisplay.textContent = firstNum + secondNum);
+                break;
+              case "-":
+                !firstNum || !secondNum
+                  ? (outputDisplay.textContent = 0)
+                  : (outputDisplay.textContent = firstNum - secondNum);
+                break;
+
+              default:
+                break;
+            }
+          }
+        };
+      });
+    </script>
+  </body>
+</html>
